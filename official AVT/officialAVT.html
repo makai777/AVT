@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certified Mail Notification Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        #generatedLetter {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Certified Mail Notification Generator</h1>
+        <form id="mailForm">
+            <!-- Date -->
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+            <!-- Legal Owner's Name -->
+            <div class="form-group">
+                <label for="legalOwnerName">Legal Owner's Name</label>
+                <input type="text" id="legalOwnerName" name="legalOwnerName" required>
+            </div>
+            <!-- Last Registered Owner's Name -->
+            <div class="form-group">
+                <label for="lastRegisteredOwnerName">Last Registered Owner's Name</label>
+                <input type="text" id="lastRegisteredOwnerName" name="lastRegisteredOwnerName" required>
+            </div>
+            <!-- Address on Record -->
+            <div class="form-group">
+                <label for="address">Address on Record</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <!-- City, State, ZIP Code -->
+            <div class="form-group">
+                <label for="cityStateZip">City, State, ZIP Code</label>
+                <input type="text" id="cityStateZip" name="cityStateZip" required>
+            </div>
+            <!-- Vehicle Make/Model -->
+            <div class="form-group">
+                <label for="vehicleMakeModel">Vehicle Make/Model</label>
+                <input type="text" id="vehicleMakeModel" name="vehicleMakeModel" required>
+            </div>
+            <!-- Vehicle Year -->
+            <div class="form-group">
+                <label for="vehicleYear">Vehicle Year</label>
+                <input type="text" id="vehicleYear" name="vehicleYear" required>
+            </div>
+            <!-- License Plate Number -->
+            <div class="form-group">
+                <label for="licensePlateNumber">License Plate Number</label>
+                <input type="text" id="licensePlateNumber" name="licensePlateNumber" required>
+            </div>
+            <!-- VIN Number -->
+            <div class="form-group">
+                <label for="vin">VIN Number</label>
+                <input type="text" id="vin" name="vin" required>
+            </div>
+            <!-- Date of Towing -->
+            <div class="form-group">
+                <label for="towingDate">Date of Towing</label>
+                <input type="date" id="towingDate" name="towingDate" required>
+            </div>
+            <!-- Location of Vehicle at Time of Tow -->
+            <div class="form-group">
+                <label for="location">Location of Vehicle at Time of Tow</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <!-- Towing Fee -->
+            <div class="form-group">
+                <label for="towingFee">Towing Fee</label>
+                <input type="number" id="towingFee" name="towingFee" required>
+            </div>
+            <!-- Generate Button -->
+            <button type="button" onclick="generateLetter()">Generate Letter</button>
+        </form>
+        
+        <div id="generatedLetter"></div>
+    </div>
+
+    <script>
+        function generateLetter() {
+            const date = document.getElementById('date').value;
+            const legalOwnerName = document.getElementById('legalOwnerName').value;
+            const lastRegisteredOwnerName = document.getElementById('lastRegisteredOwnerName').value;
+            const address = document.getElementById('address').value;
+            const cityStateZip = document.getElementById('cityStateZip').value;
+            const vehicleMakeModel = document.getElementById('vehicleMakeModel').value;
+            const vehicleYear = document.getElementById('vehicleYear').value;
+            const licensePlateNumber = document.getElementById('licensePlateNumber').value;
+            const vin = document.getElementById('vin').value;
+            const towingDate = document.getElementById('towingDate').value;
+            const location = document.getElementById('location').value;
+            const towingFee = document.getElementById('towingFee').value;
+
+            const letterContent = `
+                <p>(For All Abandoned Vehicles)</p>
+                <p>${date}</p>
+                <p>To:<br>
+                ${legalOwnerName}<br>
+                ${lastRegisteredOwnerName}<br>
+                ${address}<br>
+                ${cityStateZip}</p>
+                <p>Subject: Notice of Towing and Storage of Abandoned Vehicle</p>
+                <p>Dear ${legalOwnerName || lastRegisteredOwnerName},</p>
+                <p>This letter serves as formal notification that your vehicle has been towed and is currently being held at Pohaku Towing. The details of the vehicle are as follows:</p>
+                <ul>
+                    <li>Make/Model: ${vehicleMakeModel}</li>
+                    <li>Year: ${vehicleYear}</li>
+                    <li>License Plate: ${licensePlateNumber}</li>
+                    <li>VIN: ${vin}</li>
+                    <li>Towing Date: ${towingDate}</li>
+                    <li>Location at Tow Time: ${location}</li>
+                </ul>
+                <p>Your vehicle was towed from ${location} in accordance with HRS § 290-11 governing the towing and disposal of abandoned vehicles.</p>
+                <p>The vehicle is currently stored at the following location:<br>
+                   Pohaku Towing<br>
+                   5633 Kawaihau Rd.<br>
+                   Kapaa, HI 96746<br>
+                   Phone Number: 808-631-8177</p>
+                <p>Towing and Storage Charges:</p>
+                <ul>
+                    <li>Towing Fee: $${towingFee}</li>
+                    <li>Daily Storage Fee: $25 for the first seven days, $20/day thereafter</li>
+                </ul>
+                <p>Your Rights and Responsibilities:</p>
+                <p>You are required to retrieve your vehicle from Pohaku Towing within 30 days from the date of this notice to avoid further action. Failure to claim your vehicle within 30 days will result in the vehicle being deemed abandoned, after which it will be sold or disposed of in accordance with HRS § 290-11.</p>
+                <p>If you wish to reclaim your vehicle, you will need to pay all towing, storage, and related fees. Payment can be made by cash, credit card, or debit card.</p>
+                <p>If not claimed within 30 days of this notice, the vehicle may be sold at public auction or disposed of as junk, and you may lose all rights to the vehicle.</p>
+                <p>Consumer Assistance:</p>
+                <p>If you have any questions, please contact the Hawai'i Department of Commerce and Consumer Affairs, Consumer Information Service at 808-587-3222.</p>
+                <p>We urge you to take prompt action to recover your vehicle. For further assistance, please contact us at 808-631-8177.</p>
+                <p>Sincerely,<br>
+                Jacob Makai Rapozo<br>
+                Pohaku Towing<br>
+                5633 Kawaihau Rd.<br>
+                Kapaa, HI 96746<br>
+                Phone Number: 808-631-8177<br>
+                Email: pohaku.cori@gmail.com</p>
+                <p>Important Notice: This letter is sent in compliance with HRS § 290-11 regarding the towing and disposal of abandoned vehicles.</p>
+            `;
+
+            document.getElementById('generatedLetter').innerHTML = letterContent;
+        }
+    </script>
+</body>
+</html>
